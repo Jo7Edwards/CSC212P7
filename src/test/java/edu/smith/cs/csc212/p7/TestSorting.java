@@ -31,6 +31,7 @@ public class TestSorting {
 	private static int[] data2 = {4,7,8,9};
 	private static int[] data3 = {1,3,4,5};
 	private static int[] data4 = {9,4,6,7,2,3,1,5,8};
+	private static int[] data5 = {9};
 	@Test
 	public void testBubbleSort() {
 		// See if the data can be reversed:
@@ -93,20 +94,33 @@ public class TestSorting {
 		}
 		List<Integer> newList = new ArrayList<>();
 		newList = MergeSort.mergeSort(first, second);
-		System.out.println(newList);
+		//System.out.println(newList);
 		Assert.assertTrue(checkSorted(newList));
 	}
 	
 	//@Test 
-	public void testRMergeSort() {
+	public void testMergeSortR() {
 		ArrayList<Integer> sortMe = new ArrayList<>();
 		for (int y : data4) {
 			sortMe.add(y);
 		}
-		List<Integer> newList = new ArrayList<>();
-		newList = MergeSort.RmergeSort(sortMe);
-		System.out.println(newList);
-		Assert.assertTrue(checkSorted(newList));
+		/*List<Integer> newList = new ArrayList<>();
+		newList = MergeSort.merge(sortMe);
+		System.out.println(newList);*/
+		//System.out.println("Original data: " + sortMe);
+		List<Integer> output = MergeSort.mergeSortRec(sortMe);
+		
+		Assert.assertTrue(checkSorted(output));
+	}
+	
+	@Test
+	public void testMergeSortIns() {
+		ArrayList<Integer> sortMe = new ArrayList<>();
+		for (int y : data4) {
+			sortMe.add(y);
+		}
+		List<Integer> output = MergeSort.mergeSortIns(sortMe);
+		Assert.assertTrue(checkSorted(output));
 	}
 
 

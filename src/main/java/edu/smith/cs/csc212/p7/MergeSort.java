@@ -1,10 +1,14 @@
 package edu.smith.cs.csc212.p7;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 //Cite: https://en.wikipedia.org/wiki/Merge_sort
+//Cite: https://www.geeksforgeeks.org/merge-sort/
+import java.util.Set;
 
 public class MergeSort {
+	
 	/*
 	 * takes lists that are already sorted and
 	 * returns a new, larger merged sorted list
@@ -12,18 +16,7 @@ public class MergeSort {
 	public static List<Integer> mergeSort(List<Integer> input1, List<Integer> input2) {
 		//int N = input1.size();
 		List<Integer> newList = new ArrayList<>();
-		/*
-		for (int i=0; i<N-1; i++) {
-			int obj1 = input1.get(i);
-			int obj2 = input2.get(i);
-			if (obj1 < obj2) {
-				newList.add(i, obj1);
-				input1.remove(i);
-			} else if (obj1 > obj2) {
-				newList.add(i, obj2);
-				input2.remove(i);
-			}
-		}*/
+		
 		while (input1.size() !=0 && input2.size() !=0) {
 			if (input1.get(0) <= input2.get(0)) {
 				newList.add(input1.get(0));
@@ -44,58 +37,101 @@ public class MergeSort {
 		return newList;
 	}
 	
+	/*
+	 * Used by mergeSortR. Takes two sorted halves of a list and 
+	 * merges them together 
+	 * @return a single sorted list  
+	 */
+	public static List<Integer> merge(List<Integer> left, List<Integer> right) {
+		
+
+		
+		List<Integer> output = new ArrayList<>();
+
+		int i = 0;
+		int j = 0;
+		int n1 = left.size(); //size of first half 
+		int n2 = right.size();//size of the second half 
+		int endi = 0;
+		int endj = 0;
+		
+		while(i<n1 && j<n2) {
+			
+			if(left.get(i) <= right.get(j)) {
+				output.add(left.get(i));
+				System.out.println(output);
+				i++;
+			} else {
+				output.add(right.get(j));
+				System.out.println(output);
+				j++;
+			}
+		}
+		
+		while (i < n1)  {
+			output.add(left.get(i));
+			System.out.println("left" +output);
+			i++;
+		}
+		while (j < n2) {
+			output.add(right.get(j));
+			System.out.println("right" + output);
+			j++;
+		}
+		System.out.println("Returned" +output);
+		return output;
+	}
 	
 	
 	/*
-	 * RMerge sort that takes an unsorted list and uses 
-	 * recursion to complete Merge Sort
+	 * The is merge sort that sorts an unsorted list recursively. 
+	 * It recursively breaks down the list and eventually calls merge
+	 * to merge the two already sorted lists of fixedRight and fixedLeft
+	 * @return the entire input List sorted 
 	 */
-	public static List<Integer> RmergeSort(List<Integer> input) {
-		List<Integer> newList = new ArrayList<>();
-		List<Integer> BList = new ArrayList<>();
+	public static List<Integer> mergeSortRec(List<Integer> input) {
+		if (input.size() >= 2) {
+			int iMiddle =input.size() / 2;
+			
+			List<Integer> fixedLeft = mergeSortRec(input.subList(0, iMiddle));
+			List<Integer> fixedRight = mergeSortRec(input.subList(iMiddle, input.size()));
+			return merge(fixedLeft, fixedRight);
+		} else {
+			return input;
+		}
+	}
+	
+	
+	public static List<Integer> mergeSortIns(List<Integer> input) {
+		List<List<Integer>> worklist = new ArrayList<>();
 		int N = input.size();
-		//copy all elements to a list
-		for (int i=0;i < N-1; i++) {
-			BList.add(input.get(i));
+		
+		//Makes a list (worklist) that contains each element of input at a list
+		//
+		for (int i = 0; i< N-1; i++) {
+			int x = input.get(i);
+			List<Integer> xchunk = Collections.singletonList(x);
+			worklist.add(xchunk);
 		}
-		newList = SplitMerge(BList, 0, N-1, input);
-		
-		return newList;
-		
-		
-	}
-	
-	public static List<Integer> SplitMerge(List<Integer> B, int iBegin, int iEnd, List<Integer> A) {
-		List<Integer> newList = new ArrayList<>();
-		if (iEnd - iBegin < 2) {
-			return A;
-		}
-		int iMiddle = (iEnd + iBegin) / 2;// midpoint
-		
-		SplitMerge(A, iBegin, iMiddle, B);
-		SplitMerge(A, iMiddle, iEnd, B);
-		newList = topMerge(B, iBegin, iMiddle, iEnd, A);
-		return newList;
-	}
-	
-	public static List<Integer> topMerge(List<Integer> B, int iBegin, int iMiddle, int iEnd, List<Integer> A) {
-		int i = iBegin;
-		int j = iMiddle;
-		int k =0;
-		while (B.size() != 0 || A.size() != 0) {
-			for (k =iBegin;k<iEnd;k++) {
-				if (i < iMiddle && (j >= iEnd || A.get(i) <= A.get(j))) {
-					B.set(k, A.get(i));
-					i++;
-				} else {
-					B.set(k, A.get(j));
-					j++;
-				}
+		System.out.println("Worklist: " + worklist);
+		int wn = worklist.size();
+		System.out.println("Worklist SIZE: " + wn);
+		while (worklist.size()>=2) {
+			for (int i = 0; i< wn-1; i++) {
+				List<Integer> temp = merge(worklist.get(0), worklist.get(1));
+				System.out.println("TEMP!: " + temp);
+				//delete the first and then "the second" (when first is 
+				//deleted the second moves to the first spot
+				worklist.remove(0);
+				worklist.remove(0);
+				worklist.add(temp);
 
 			}
 		}
-		return B;
+		return worklist.get(0);
+		
 	}
+	
 	
 	
 	
