@@ -104,7 +104,7 @@ public class TestSorting {
 			sortMe.add(y);
 		}
 		List<Integer> newList = new ArrayList<>();
-		newList = MergeSort.RRmergeSort(sortMe);
+		newList = MergeSort.RmergeSort(sortMe);
 		System.out.println(newList);
 		Assert.assertTrue(checkSorted(newList));
 	}

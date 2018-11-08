@@ -46,8 +46,11 @@ public class MergeSort {
 	
 	
 	
-	
-	public static List<Integer> RRmergeSort(List<Integer> input) {
+	/*
+	 * RMerge sort that takes an unsorted list and uses 
+	 * recursion to complete Merge Sort
+	 */
+	public static List<Integer> RmergeSort(List<Integer> input) {
 		List<Integer> newList = new ArrayList<>();
 		List<Integer> BList = new ArrayList<>();
 		int N = input.size();
@@ -92,86 +95,11 @@ public class MergeSort {
 			}
 		}
 		return B;
-		
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * merge sort that uses recursion
-	 * @return sorted list 
-	 */
-	public static List<Integer> RmergeSort(List<Integer> input) {
-		int N = input.size();
-		if (N <= 1) {
-			return input;
-		}
-		
-		List<Integer> left = new ArrayList<>();
-		List<Integer> right = new ArrayList<>();
-
-		
-		for (int i =0; i<N-1; i++) {
-			int x = input.get(i);
-			if (i < (N/2)) {
-				left.add(x);
-			} else {
-				right.add(x);
-			}
-			
-		}
-		/*
-		if (left.size() > 1) {
-			RmergeSort(left);
-		} else {
-			
-		}
-		if (right.size() >1) {
-			RmergeSort(right);
-		} else {
-			
-		}
-		System.out.println("THIS IS LEFT1: " + left);
-		System.out.println("THIS IS RIGHT1: " + right);
-		/*left = RmergeSort(left);
-		right = RmergeSort(right);
-		System.out.println("INPUT : " + input);
-		System.out.println("THIS IS LEFT: " + left);
-		System.out.println("THIS IS RIGHT: " + right);
-		return mergeSort(right, left);*/
-		
-		System.out.println("THIS IS LEFT: " + left);
-		System.out.println("THIS IS RIGHT: " + right);
-		
-		return mergeSort(right, left);
-	}
-	
-	public static List<Integer> splitList() {
-		
-	}
 }
 
 
