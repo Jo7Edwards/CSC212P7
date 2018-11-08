@@ -28,7 +28,9 @@ public class TestSorting {
 	 * Here's some data!
 	 */
 	private static int[] data = {9,8,7,6,5,4,3,2,1};
-	
+	private static int[] data2 = {4,7,8,9};
+	private static int[] data3 = {1,3,4,5};
+	private static int[] data4 = {9,4,6,7,2,3,1,5,8};
 	@Test
 	public void testBubbleSort() {
 		// See if the data can be reversed:
@@ -53,6 +55,58 @@ public class TestSorting {
 		
 		BubbleSort.bubbleSort(sortMe);
 		Assert.assertTrue(checkSorted(sortMe));
+	}
+	
+	@Test
+	public void testSelectionSort() {
+		ArrayList<Integer> sortMe = new ArrayList<>();
+		for (int y : data) {
+			sortMe.add(y);
+		}
+		SelectionSort.selectionSort(sortMe);
+		System.out.println(sortMe);
+		Assert.assertTrue(checkSorted(sortMe));
+		
+		
+	}
+	
+	@Test 
+	public void testInsertionSort() {
+		ArrayList<Integer> sortMe = new ArrayList<>();
+		for (int y : data) {
+			sortMe.add(y);
+		}
+		InsertionSort.insertionSort(sortMe);
+		System.out.println(sortMe);
+		Assert.assertTrue(checkSorted(sortMe));
+	}
+	
+	@Test
+	public void testMergeSort() {
+		ArrayList<Integer> first = new ArrayList<>();
+		for (int y : data2) {
+			first.add(y);
+		}
+		ArrayList<Integer> second = new ArrayList<>();
+		for (int y : data3) {
+			second.add(y);
+		}
+		List<Integer> newList = new ArrayList<>();
+		newList = MergeSort.mergeSort(first, second);
+		System.out.println(newList);
+		Assert.assertTrue(checkSorted(newList));
+	}
+	
+	//@Test 
+	public void testRMergeSort() {
+		ArrayList<Integer> sortMe = new ArrayList<>();
+		for (int y : data4) {
+			sortMe.add(y);
+		}
+		List<Integer> newList = new ArrayList<>();
+		newList = MergeSort.RRmergeSort(sortMe);
+		System.out.println(newList);
+		Assert.assertTrue(checkSorted(newList));
 	}
 
 
